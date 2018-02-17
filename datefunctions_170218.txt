@@ -1,0 +1,30 @@
+"""
+Created on Fri Feb  9 08:06:30 2018
+
+@author: ryanmorin
+"""
+
+import pandas as pd
+import numpy as np
+import datetime
+import matplotlib.pyplot as plt
+
+# import the data set to a dataframe called tdf
+tdf = pd.read_csv('C:/Users/ryanj/UofTDataScience/FinalProject/KSData.csv', index_col='ID')
+
+
+#convert the string to a date function
+def read_date(string):
+    date = datetime.datetime.strptime(string,'%m/%d/%Y')
+    return date
+
+#convert the string to date function
+def get_date(string):
+    space = string.find(" ")
+    if space != -1:
+        date = datetime.datetime.strptime(string[:space],'%m/%d/%Y')
+    return date
+
+#update the dataframe columns with the corrected date structure
+tdf['launched'] = tdf['launched'].apply(get_date)
+tdf['deadline'] = tdf['deadline'].apply(read_date)
